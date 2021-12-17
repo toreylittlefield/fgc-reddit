@@ -6,8 +6,7 @@ let code;
 let expiryTime;
 
 const clientID = process.env.NODE_ENV === 'production' ? '6GyLIZKwo2Oo3s1FgtecFw' : 'UTzjq5fgYGrdKJogTOjwKw';
-const clientSecret =
-  process.env.NODE_ENV === 'production' ? 'S0JhJxxfKogUviVhk0QAg5F7iQvg3w' : 'kepD_jqAWpk3O4IW2FPYiXUimTto7w';
+const clientSecret = process.env.NODE_ENV === 'production' ? 'S0JhJxxfKogUviVhk0QAg5F7iQvg3w' : 'kepD_jqAWpk3O4IW2FPYiXUimTto7w';
 const userAgent = 'fgc-reddit by u/DavyK17_ (Codecademy portfolio project)';
 
 const responseType = 'code';
@@ -168,7 +167,7 @@ const Reddit = {
         const jsonResponse = await response.json();
         const fetched = jsonResponse.data.children.map((e) => e.data);
         return fetched.filter(
-          (el) => !el.is_gallery && el.post_hint !== 'link' && !checkNested(el, 'secure_media_embed', 'content')
+          (el) => !el.is_gallery && (el.post_hint !== 'link' && (el.domain.includes("self") || el.domain.includes("redd.it"))) && !checkNested(el, 'secure_media_embed', 'content')
         );
       }
     } catch (error) {
